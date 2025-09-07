@@ -150,18 +150,6 @@ File-Encryption-Decryption/
 └── README.md              # This file
 ```
 
-# AES encryption (recommended for sensitive data)
-python file_crypto.py -a encrypt myfile.txt
-python file_crypto.py -a decrypt myfile.txt.enc
-
-# Caesar cipher (educational/simple obfuscation)
-python file_crypto.py -a encrypt -m caesar -k 13 myfile.txt
-python file_crypto.py -a decrypt -m caesar -k 13 myfile.txt.caesar
-
-# With custom output and password
-python file_crypto.py -a encrypt -o secure.enc --password mypass document.pdf
-
-
 ## Contributing
 
 1. Fork the repository
