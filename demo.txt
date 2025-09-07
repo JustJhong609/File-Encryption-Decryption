@@ -1,0 +1,7 @@
+This is a sample text file for demonstration.
+It contains multiple lines of text.
+We will encrypt this file using both Caesar cipher and AES encryption.
+
+Some special characters: !@#$%^&*()
+Some numbers: 123456789
+Mixed case letters: AbCdEfGhIjKlMnOp
