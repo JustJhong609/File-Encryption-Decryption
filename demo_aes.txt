@@ -1,9 +1,0 @@
-This is a sample text file for AES encryption demonstration.
-It contains multiple lines of text.
-We will encrypt this file using AES-256 encryption.
-
-Some special characters: !@#$%^&*()
-Some numbers: 123456789
-Mixed case letters: AbCdEfGhIjKlMnOp
-
-This content should remain exactly the same after encryption/decryption.
