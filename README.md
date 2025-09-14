@@ -4,11 +4,27 @@ A comprehensive Python tool for encrypting and decrypting files using both simpl
 
 ## Features
 
-- **Caesar Cipher**: Simple substitution cipher with customizable shift values (1-25)
-- **AES-256 Encryption**: Industry-standard encryption with password-based key derivation
-- **File Support**: Works with both text and binary files
-- **Command-line Interface**: Easy-to-use CLI with various options
-- **Secure Implementation**: Uses cryptography library for AES with PBKDF2 key derivation
+### Encryption Methods
+- **Caesar Cipher**: Simple substitution cipher with two modes:
+  - **Text Mode**: Shifts letters only (A-Z, a-z), preserves other characters (shift: 1-25)  
+  - **Binary Mode**: Shifts all bytes using modular arithmetic (shift: 1-255)
+- **AES-256 Encryption**: Industry-standard encryption with configurable security parameters
+
+### Security Enhancements
+- **Password Strength Validation**: Comprehensive validation with security recommendations
+- **Configurable PBKDF2**: Customizable iterations (default: 100,000) and salt size
+- **Secure Input**: Uses getpass for password input without command-line echoing
+- **Safe File Handling**: Automatic output filename generation to prevent overwrites
+
+### Robust Error Handling
+- **Input Validation**: Comprehensive validation of all parameters and file paths
+- **Permission Checks**: Validates file read/write permissions before processing
+- **Graceful Failure**: Clear error messages and proper cleanup on failures
+
+### Advanced CLI Features
+- **Smart Filename Generation**: Automatic safe output filenames with conflict resolution
+- **Multiple Security Levels**: Configurable encryption parameters for different use cases
+- **Comprehensive Help**: Detailed usage examples and security notes
 
 ## Requirements
 
@@ -52,27 +68,49 @@ python file_crypto.py -a decrypt -m caesar -k 5 myfile.txt.caesar
 
 #### Command Line Arguments
 
-- `file`: Input file path (required)
-- `-a, --action`: Action to perform (`encrypt` or `decrypt`) (required)
+**Required:**
+- `file`: Input file path
+- `-a, --action`: Action to perform (`encrypt` or `decrypt`)
+
+**Encryption Method:**
 - `-m, --method`: Encryption method (`caesar` or `aes`) (default: `aes`)
-- `-o, --output`: Output file path (optional, auto-generated if not specified)
-- `-k, --key`: Caesar cipher shift value (1-25, required for Caesar cipher)
-- `--password`: AES password (optional, will prompt if not provided)
+
+**Output Options:**
+- `-o, --output`: Output file path (optional, auto-generated with conflict resolution if not specified)
+- `--no-overwrite-check`: Disable safe filename generation (may overwrite files)
+
+**Caesar Cipher Options:**
+- `-k, --key`: Shift value (1-25 for text mode, 1-255 for binary mode)
+- `--binary-caesar`: Enable binary mode (operates on all bytes, not just letters)
+
+**AES Encryption Options:**
+- `--password`: Password (optional, will prompt securely if not provided)
+- `--aes-iterations`: PBKDF2 iterations (default: 100,000)
+- `--weak-password-ok`: Skip password strength warnings
 
 #### Examples
 
 ```bash
-# AES encryption with custom output file
-python file_crypto.py -a encrypt -o encrypted_data.enc document.pdf
+# AES encryption with custom output file and security parameters
+python file_crypto.py -a encrypt -o encrypted_data.enc --aes-iterations 200000 document.pdf
 
-# Caesar cipher with shift 13 (ROT13)
+# Caesar cipher with shift 13 (ROT13) - text mode
 python file_crypto.py -a encrypt -m caesar -k 13 message.txt
 
-# AES decryption with password provided
+# Binary Caesar cipher for any file type
+python file_crypto.py -a encrypt -m caesar --binary-caesar -k 42 image.jpg
+
+# AES decryption with password provided (less secure)
 python file_crypto.py -a decrypt --password mypassword secret.txt.enc
 
-# Caesar decryption
+# AES decryption with secure password prompt
+python file_crypto.py -a decrypt secret.txt.enc
+
+# Caesar decryption (auto-detects mode based on encryption)
 python file_crypto.py -a decrypt -m caesar -k 13 message.txt.caesar
+
+# Disable overwrite protection (use with caution)
+python file_crypto.py -a encrypt --no-overwrite-check data.txt
 ```
 
 ### Python API
