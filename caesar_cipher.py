@@ -167,6 +167,12 @@ class CaesarCipher:
                     with open(input_path, 'r', encoding='utf-8') as infile:
                         content = infile.read()
                     
+                    if len(content) == 0:
+                        # Empty file - just create empty output
+                        with open(output_path, 'w', encoding='utf-8') as outfile:
+                            outfile.write("")
+                        return
+                    
                     encrypted_content = self.encrypt_text(content)
                     
                     with open(output_path, 'w', encoding='utf-8') as outfile:
@@ -221,7 +227,10 @@ class CaesarCipher:
                     content = infile.read()
                 
                 if len(content) == 0:
-                    raise ValidationError("Input file is empty")
+                    # Empty file - just create empty output
+                    with open(output_path, 'w', encoding='utf-8') as outfile:
+                        outfile.write("")
+                    return
                 
                 decrypted_content = self.decrypt_text(content)
                 
